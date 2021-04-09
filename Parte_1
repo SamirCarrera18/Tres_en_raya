@@ -3,8 +3,9 @@
 #include <stdlib.h>
 using namespace std;
 
- 
-char Ficha(char ficha_p){
+//Samir Fabrizio Carrera Alfaro - UCSP - Ciencia de la Computación I - CCOMP2-1
+
+char Ficha(char ficha_p){  //Recibe "X" o "O" y le da la otra ficha al otro jugador 
 	char ficha_c;
 	if(ficha_p=='X'||ficha_p=='x'){
 		ficha_c='O';
@@ -22,7 +23,7 @@ char Ficha(char ficha_p){
 
 	
 
-void Tablero(string tablero[]){
+void Tablero(string tablero[]){ //Inprime el tablero 
 	int i;
 	for( i=0; i<3; i++){
 		cout<<tablero[i];
@@ -32,7 +33,7 @@ void Tablero(string tablero[]){
 	}
 }
 
-string *Poner_Ficha(char pos, char ficha, string tablero[]){
+string *Poner_Ficha(char pos, char ficha, string tablero[]){ //funcion para `pner la ficha escogina anteriormente en la posicion deseada
 		for(int i=0; i<3; i++){
 			for(int j=1; j<=9; j+=4){
 				if(pos == tablero[i][j]){
