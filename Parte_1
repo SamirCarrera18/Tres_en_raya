@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+using namespace std;
+
+ 
+char Ficha(char ficha_p){
+	char ficha_c;
+	if(ficha_p=='X'||ficha_p=='x'){
+		ficha_c='O';
+		return ficha_c;
+	}
+	if(ficha_p=='O' || ficha_p=='o'){
+		ficha_c='X';
+		return ficha_c;
+	}else{
+		cout<<"Ficha incorrecta"; 
+	}
+	return ficha_c;
+}
+	
+
+	
+
+void Tablero(string tablero[]){
+	int i;
+	for( i=0; i<3; i++){
+		cout<<tablero[i];
+		if(i != 2){
+			cout<<"\n"<<"-----------\n";
+		}
+	}
+}
+
+string *Poner_Ficha(char pos, char ficha, string tablero[]){
+		for(int i=0; i<3; i++){
+			for(int j=1; j<=9; j+=4){
+				if(pos == tablero[i][j]){
+					tablero[i][j]=ficha;
+				}
+			}
+		}
+	return tablero;
+}
+
+int main() {
+	string tablero[3]={{" 1 | 2 | 3 "},{" 4 | 5 | 6 "},{" 7 | 8 | 9 "}};
+	char ficha_c, ficha_p;
+	char pos;
+	cout<<"Escoja X o O : ";cin>>ficha_p;
+	system("cls");
+	ficha_c=Ficha(ficha_p);
+	Tablero(tablero);
+	cout<<"\nTurno de Jugador: "<<ficha_p<<" donde desea poner su ficha? : ";cin>>pos;
+	system("cls");
+	Tablero(Poner_Ficha(pos, ficha_p, tablero));
+	
+	return 0;
+}
+
