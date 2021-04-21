@@ -1,0 +1,126 @@
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include <cmath>
+using namespace std;
+
+//Samir Fabrizio Carrera Alfaro - UCSP - Ciencia de la Computación I - CCOMP2-1
+
+string Ficha(string ficha_p){  //Recibe "X" o "O" y le da la otra ficha al otro jugador 
+	string ficha_c;
+	if(ficha_p=="X"||ficha_p=="x"){
+		ficha_c="O";
+		return ficha_c;
+	}
+	if(ficha_p=="O" || ficha_p=="o"){
+		ficha_c="X";
+		return ficha_c;
+	}else{
+		cout<<"Ficha incorrecta"; 
+	}
+	return ficha_c;
+}
+	
+
+	
+
+void Tablero(string tablero[][3]){ //Imprime el tablero 
+	int i, j=0;
+	for( i=0; i<3; i++){
+		cout<<" "<<tablero[i][j]<<" | "<<tablero[i][j+1]<<" | "<<tablero[i][j+2]<<endl;
+		if(i<2){
+			cout<<"-----------"<<endl;
+		}
+	}
+}
+	
+
+
+string *Poner_Ficha(string pos, string ficha, string tablero[][3]){ //funcion para marcar la posicion correcta
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++){
+				if(tablero[i][j] == pos){
+					tablero[i][j]=ficha;
+				}
+			}
+		}
+	return *tablero;
+}
+bool Confirmar_mov(string tablero[][3], string pos){ //Verifica que la ficha se pueda poner en la casilla seleccionada
+	bool mov_valido=false;
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			if(tablero[i][j] == pos){
+				return mov_valido=true;
+			}
+		}
+	}
+	return mov_valido;
+}
+bool Verificar(string tablero[][3]){ //Verifica todas las opciones posibles de 3 en raya
+	bool gano=false;
+	for(int i=0; i<3; i++){
+			if(tablero[i][0]==tablero[i][1]&&tablero[i][1]==tablero[i][2]){
+				return gano=true;
+			}
+			if(tablero[0][i]==tablero[1][i]&&tablero[1][i]==tablero[2][i]){
+				return gano=true;
+			}
+			if(tablero[0][0]==tablero[1][1]&&tablero[1][1]==tablero[2][2]){
+				return gano=true;
+			}
+			if(tablero[2][0]==tablero[1][1]&&tablero[0][2]==tablero[1][1]){
+				return gano=true;
+			}
+		}
+	return gano;
+}
+	
+int main() {
+	string tablero[3][3]={{"1","2","3"},{"4","5","6"},{"7","8","9"}};
+	string ficha_c, ficha_p, pos;
+	int movimientos=1;
+	cout<<"Escoja X o O : ";cin>>ficha_p;
+	system("cls");
+	ficha_c=Ficha(ficha_p);
+	Tablero(tablero);
+	while(movimientos <= 9){ //cuenta la cantidad de movimientos para que no se pase
+		if(movimientos%2==1){
+			cout<<"\nTurno de Jugador: "<<ficha_p<<" donde desea poner su ficha? : ";cin>>pos;
+			if(Confirmar_mov(tablero,pos)){ //Confirma que el movimiento es correcto
+				Poner_Ficha(pos,ficha_p,tablero);// Coloca la ficha
+				Tablero(tablero); //Imprime el tablero
+				movimientos+=1; // Hace el conteo del movimiento
+			}else{
+				cout<<"Movimiento no valido, vuelva a intentarlo";
+			}
+		}if(Verificar(tablero)){ //Veridfica si el movimiento hizo el 3 en raya
+			cout<<"GANADOR - "<<ficha_p<<" - FELICITACIONES";
+			break;
+		}
+		if(movimientos%2==0){
+			int aleatorio = 1 + rand()%9; //aleatorios entre 1 hasta 9
+			pos = to_string(aleatorio); //Lo convierte en string para poder compararlo despues
+			while(movimientos%2==0){
+				if(Confirmar_mov(tablero,pos)){//Confirma que el movimiento es correcto
+					system("cls");
+					cout<<"\nTurno de Jugador: "<<ficha_c<<" donde desea poner su ficha? : ";
+					cout<<pos<<endl;
+					Poner_Ficha(pos,ficha_c,tablero);// Coloca la ficha
+					Tablero(tablero); //Imprime el tablero
+					movimientos+=1; // Hace el conteo del movimiento
+				}else{
+					int aleatorio = 1 + rand()%9;
+					pos = to_string(aleatorio);
+				}
+			}
+		}if(Verificar(tablero)){ //Veridfica si el movimiento hizo el 3 en raya
+			cout<<"GANADOR - "<<ficha_c<<" - FELICITACIONES";
+			break;
+		}
+		
+		
+	}
+	return 0;
+}
+
